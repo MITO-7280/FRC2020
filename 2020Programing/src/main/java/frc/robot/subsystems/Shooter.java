@@ -15,7 +15,6 @@ public class Shooter extends SubsystemBase{
     public TalonFX shootingSlave = new TalonFX(Constants.shootingSlave);
 
     //variablies
-    public double shootSpeed;
     public Shooter(){
         Constants.TalonInit(shootingMaster, 40, false);
         Constants.TalonInit(shootingSlave, 40, false);
@@ -35,11 +34,8 @@ public class Shooter extends SubsystemBase{
 
     }
 
-    public void shoot(){
+    public void shoot(double shootSpeed){
         shootingMaster.set(ControlMode.Velocity, shootSpeed);
     }
 
-    public void stopShoot(){
-        shootingMaster.set(ControlMode.Velocity, shootSpeed);
-    }
 }

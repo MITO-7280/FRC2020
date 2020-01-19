@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -21,10 +22,9 @@ public class ExampleSubsystem extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
 
-  private TalonSRX testMotor = new TalonSRX(10);
+  private TalonFX testMotor = new TalonFX(10);
   private VictorSPX testMotor2 = new VictorSPX(0);
   public ExampleSubsystem() {
-    testMotor.configForwardSoftLimitEnable(false);
     testMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
         Constants.kTimeoutMs);
 
@@ -58,13 +58,12 @@ public class ExampleSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    System.out.println(testMotor.getSelectedSensorPosition());
+    System.out.println(testMotor.getSelectedSensorVelocity());
   }
 
   public void testRun(double speed){
     testMotor.set(ControlMode.PercentOutput, speed);
     // testMotor2.set(ControlMode.PercentOutput, speed);
-    System.out.println("55");
   }
 
 /**
