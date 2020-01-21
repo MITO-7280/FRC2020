@@ -33,7 +33,7 @@ public class ExampleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_exampleSubsystem.testRun(100);
+    RobotContainer.m_exampleSubsystem.testRun(-120000);
   }
 
   // Called once the command ends or is interrupted.

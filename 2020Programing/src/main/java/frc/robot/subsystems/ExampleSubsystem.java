@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -22,15 +21,14 @@ public class ExampleSubsystem extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
 
-  private TalonFX testMotor = new TalonFX(10);
-  private VictorSPX testMotor2 = new VictorSPX(0);
+  private TalonSRX testMotor = new TalonSRX(1);
   public ExampleSubsystem() {
     testMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
         Constants.kTimeoutMs);
 
         testMotor.configFactoryDefault();
     // make sure the sensor gieves the postive value whent the output is positive. 
-    testMotor.setSensorPhase(true);
+    testMotor.setSensorPhase(false);
 
     testMotor.configNominalOutputForward(0, Constants.kTimeoutMs);
     testMotor.configNominalOutputReverse(0, Constants.kTimeoutMs);
@@ -41,17 +39,7 @@ public class ExampleSubsystem extends SubsystemBase {
     
     testMotor.configAllowableClosedloopError(1, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     
-
     testMotor.setInverted(false);
-
-    testMotor.config_kF(Constants.kSlotIdx, 0);
-    testMotor.config_kP(Constants.kSlotIdx, 0);
-    testMotor.config_kI(Constants.kSlotIdx, 0);
-    testMotor.config_kD(Constants.kSlotIdx, 0);
-
-    testMotor.setNeutralMode(NeutralMode.Coast);
-
-    testMotor2.follow(testMotor);
 
   }
 
@@ -62,7 +50,11 @@ public class ExampleSubsystem extends SubsystemBase {
   }
 
   public void testRun(double speed){
-    testMotor.set(ControlMode.PercentOutput, speed);
+    testMotor.config_kF(Constants.kSlotIdx, 0);
+    testMotor.config_kP(Constants.kSlotIdx, 0.07);
+    testMotor.config_kI(Constants.kSlotIdx, 0);
+    testMotor.config_kD(Constants.kSlotIdx, 0.01);
+    testMotor.set(ControlMode.Velocity, speed);
     // testMotor2.set(ControlMode.PercentOutput, speed);
   }
 

@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -76,7 +77,7 @@ Constants {
     
         // set up TalonSRX and closed loop
         // select an encoder and set it
-        _talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
+        _talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, kPIDLoopIdx, kTimeoutMs);
     
         _talon.configFactoryDefault();
         // make sure the sensor gieves the postive value whent the output is positive. 
@@ -116,4 +117,35 @@ Constants {
         _pidController.setFF(0);
         _pidController.setOutputRange(_mini, _max);
     }//放到每个需要的程序里面
+
+    public static void TalonSRXInit(TalonSRX _talon, int _peakOutput, boolean isInverted){
+    
+        // set up TalonSRX and closed loop
+        // select an encoder and set it
+        _talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
+    
+        _talon.configFactoryDefault();
+        // make sure the sensor gieves the postive value whent the output is positive. 
+        _talon.setSensorPhase(true);
+    
+        _talon.configNominalOutputForward(0, kTimeoutMs);
+        _talon.configNominalOutputReverse(0, kTimeoutMs);
+        _talon.configPeakOutputForward(1, kTimeoutMs);
+        _talon.configPeakOutputReverse(-1, kTimeoutMs);
+    
+        _talon.setSelectedSensorPosition(0, kPIDLoopIdx, kTimeoutMs);
+        
+        _talon.configAllowableClosedloopError(1, kPIDLoopIdx, kTimeoutMs);
+        
+        _talon.configClosedLoopPeakOutput(kSlotIdx, _peakOutput, kTimeoutMs);
+
+        _talon.setInverted(isInverted);
+    }
+
+    public static void setTalonPID(TalonSRX _talon, double kF, double kP, double kI, double kD){
+        _talon.config_kF(kSlotIdx, kF);
+        _talon.config_kP(kSlotIdx, kP);
+        _talon.config_kI(kSlotIdx, kI);
+        _talon.config_kD(kSlotIdx, kD);
+    }
 }
