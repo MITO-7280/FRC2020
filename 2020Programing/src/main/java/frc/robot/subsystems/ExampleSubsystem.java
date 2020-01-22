@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class ExampleSubsystem extends SubsystemBase {
   /**
@@ -40,28 +41,22 @@ public class ExampleSubsystem extends SubsystemBase {
     testMotor.configAllowableClosedloopError(1, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     
     testMotor.setInverted(false);
-
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     System.out.println(testMotor.getSelectedSensorVelocity());
+
   }
 
-  public void testRun(double speed){
+  public void testRun(double speedRPM){
     testMotor.config_kF(Constants.kSlotIdx, 0);
     testMotor.config_kP(Constants.kSlotIdx, 0.07);
     testMotor.config_kI(Constants.kSlotIdx, 0);
     testMotor.config_kD(Constants.kSlotIdx, 0.01);
+    double speed = speedRPM*4096/600;
     testMotor.set(ControlMode.Velocity, speed);
-    // testMotor2.set(ControlMode.PercentOutput, speed);
   }
 
-/**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
 }

@@ -24,8 +24,7 @@ import com.revrobotics.CANSparkMax;
  * It is advised to statically import this class (or one of its inner classes)
  * wherever the constants are needed, to reduce verbosity.
  */
-public final class 
-Constants {
+public final class Constants {
     //robotMap
 
     //motors
@@ -65,6 +64,9 @@ Constants {
     //chassis
     public static final int highSpeedConstant = 3000;
     public static final int lowSpeedConstant = 1500;
+
+    //shooter
+    public static final int shootVelocity = 4000; //RPM
 
     //Joystick
     public static final int motionJoystick = 0;

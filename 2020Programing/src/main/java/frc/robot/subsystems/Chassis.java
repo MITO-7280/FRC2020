@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Chassis extends SubsystemBase {
     //set can devices 
@@ -53,6 +54,11 @@ public class Chassis extends SubsystemBase {
         SmartDashboard.putNumber("right Velocity", rightMasterMotor.getSelectedSensorVelocity());
         SmartDashboard.putNumber("left Position", leftMasterMotor.getSelectedSensorPosition());
         SmartDashboard.putNumber("right Positon", rightMasterMotor.getSelectedSensorPosition());
+        if (RobotContainer.oi.motionStick.getPOV() == 0){
+            isForward = true;
+        } else if (RobotContainer.oi.motionStick.getPOV() == 180){
+            isForward = false;
+        }
     }
 
     public void drive(double xValue, double yValue){
