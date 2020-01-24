@@ -52,9 +52,4 @@ public class Shooter extends SubsystemBase{
             isReady = false;
         }
     }
-
-    public void shoot(double shootSpeed){
-        shootingMaster.set(ControlMode.Velocity, shootSpeed);
-    }
-
 }

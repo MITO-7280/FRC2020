@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -7,13 +8,14 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Intake extends SubsystemBase {
     public CANSparkMax intakeMotor = new CANSparkMax(Constants.intakeMotor, MotorType.kBrushless);
     public CANSparkMax transferMotor = new CANSparkMax(Constants.transferMotor, MotorType.kBrushless);
 
     public Solenoid intakePusher = new Solenoid(Constants.intakePusher);
-    public Solenoid balllTransferStopper = new Solenoid (Constants.ballTransferStopper);
+    public Solenoid ballTransferStopper = new Solenoid (Constants.ballTransferStopper);
 
     public Intake(){
         Constants.REVInit(intakeMotor, true, 0.1, 0, 0, 1, -1);
@@ -26,11 +28,16 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic(){
-
+        if (RobotContainer.shooter.isReady){
+            ballTransferStopper.set(false);
+        } else {
+            ballTransferStopper.set(true);
+        }
     }
 
-    public void intake(double _percent){
-        intakeMotor.set(_percent);
+    public void intake(double speed){
+        intakeMotor.set(speed);
+        transferMotor.set(500);
     }
 
     public void intakeOut(){
@@ -39,5 +46,9 @@ public class Intake extends SubsystemBase {
 
     public void intakeIn(){
         intakePusher.set(false);
+    }
+
+    public void shootball(){
+        transferMotor.set(500);
     }
 }
