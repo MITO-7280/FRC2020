@@ -7,8 +7,8 @@ import frc.robot.subsystems.Chassis;
 
 public class ToHighSpeed extends CommandBase{
 
-    public ToHighSpeed(Chassis subsystem){
-        addRequirements(subsystem);
+    public ToHighSpeed(){
+        addRequirements(RobotContainer.chassis);
     }
 
     @Override 

@@ -28,8 +28,8 @@ public class Drive extends CommandBase {
   public Drive(double _xValue, double _yValue) {
     _xValue = RobotContainer.oi.motionStick.getX();
     _yValue = RobotContainer.oi.motionStick.getY();
-    xValue = _xValue;
-    yValue = _yValue;
+    xValue = RobotContainer.chassis.deadBand(_xValue);
+    yValue = RobotContainer.chassis.deadBand(_yValue);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.chassis);
   }

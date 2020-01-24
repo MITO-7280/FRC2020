@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -36,20 +37,25 @@ public class Shooter extends SubsystemBase{
 
     @Override
     public void periodic(){
+        //when to prepare for shooting
         if (RobotContainer.oi.motionStick.getTwist() >= 0.5){
             isShooting = true;
         } else if (RobotContainer.oi.motionStick.getTwist() <= 0.5){
             isShooting = false;
         }
+        SmartDashboard.putBoolean("isShooting", isShooting);
 
+        //active flywheel
         if (isShooting){
             shootingMaster.set(ControlMode.Velocity, shootUnitVelocity);
         }
 
+        //when is ready to shoot
         if (shootingMaster.getSelectedSensorVelocity() >= shootUnitVelocity){
             isReady = true;
         } else {
             isReady = false;
         }
+        SmartDashboard.putBoolean("isReady", isReady);
     }
 }

@@ -7,8 +7,8 @@ import frc.robot.subsystems.Chassis;
 
 public class ToLowSpeed extends CommandBase{
     
-    public ToLowSpeed(Chassis subsystem) {
-        addRequirements(subsystem);
+    public ToLowSpeed() {
+        addRequirements(RobotContainer.chassis);
     }
 
     @Override

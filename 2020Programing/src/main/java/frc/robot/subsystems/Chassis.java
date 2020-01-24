@@ -50,18 +50,34 @@ public class Chassis extends SubsystemBase {
     }
     @Override
     public void periodic(){
+        //show Velocity data
         SmartDashboard.putNumber("left Velocity", leftMasterMotor.getSelectedSensorPosition());
         SmartDashboard.putNumber("right Velocity", rightMasterMotor.getSelectedSensorVelocity());
+
+        //show position data
         SmartDashboard.putNumber("left Position", leftMasterMotor.getSelectedSensorPosition());
         SmartDashboard.putNumber("right Positon", rightMasterMotor.getSelectedSensorPosition());
+
+        //show drive direction data
+        SmartDashboard.putBoolean("isForward", isForward);
+
+        //show drive speed data 
+        SmartDashboard.putBoolean("isHighSpeed", isHighSpeed);
+
+
+        //set forward or not
         if (RobotContainer.oi.motionStick.getPOV() == 0){
             isForward = true;
         } else if (RobotContainer.oi.motionStick.getPOV() == 180){
             isForward = false;
         }
+
+        //active solenoid to fast of slow
+        driveModeSwitcher.set(isHighSpeed);
     }
 
     public void drive(double xValue, double yValue){
+        //set drive speed and drive with velocity PID
         configVelocityPID();
         if (isForward){
             if (isHighSpeed){
@@ -84,26 +100,17 @@ public class Chassis extends SubsystemBase {
     }
 
     public void speedDrive(){
+        //drive with velocity PID
         leftMasterMotor.set(ControlMode.Velocity, leftSpeed);
         rightMasterMotor.set(ControlMode.Velocity, rightSpeed);
     }
 
     public void toHighSpeed(){
         isHighSpeed = true;
-        driveModeSwitcher.set(true);
     }
 
     public void toLowSpeed(){
         isHighSpeed = false;
-        driveModeSwitcher.set(false);
-    }
-
-    public void toForward(){
-        isForward = true;
-    }
-
-    public void toBackward(){
-        isForward = false;
     }
 
     public void configVelocityPID(){
@@ -114,6 +121,19 @@ public class Chassis extends SubsystemBase {
     public void configPositionPID(){
         Constants.setFalconPID(leftMasterMotor, 0, 0, 0, 0);
         Constants.setFalconPID(rightMasterMotor, 0, 0, 0, 0);
+    }
+
+    public double deadBand(double value){
+        //init joystick output dataa
+        if (value >= 0.05){
+            return value;
+        }
+
+        if (value <= -0.05){
+            return value;
+        }
+
+        return 0;
     }
 
 }
