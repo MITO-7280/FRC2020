@@ -38,16 +38,18 @@ public class Shooter extends SubsystemBase{
     @Override
     public void periodic(){
         //when to prepare for shooting
-        if (RobotContainer.oi.motionStick.getTwist() >= 0.5){
-            isShooting = true;
-        } else if (RobotContainer.oi.motionStick.getTwist() <= 0.5){
+        if (RobotContainer.oi.motionStick.getRawAxis(3) >= 0.5){
             isShooting = false;
+        } else if (RobotContainer.oi.motionStick.getRawAxis(3) <= 0.5){
+            isShooting = true;
         }
         SmartDashboard.putBoolean("isShooting", isShooting);
 
         //active flywheel
         if (isShooting){
             shootingMaster.set(ControlMode.Velocity, shootUnitVelocity);
+        } else {
+            shootingMaster.set(ControlMode.PercentOutput, 0);
         }
 
         //when is ready to shoot

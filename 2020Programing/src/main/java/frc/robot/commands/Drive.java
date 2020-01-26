@@ -17,7 +17,7 @@ import frc.robot.subsystems.Chassis;
  */
 public class Drive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  double xValue;
+  double zValue;
   double yValue;
 
   /**
@@ -25,11 +25,7 @@ public class Drive extends CommandBase {
    *
    *  The subsystem used by this command.
    */
-  public Drive(double _xValue, double _yValue) {
-    _xValue = RobotContainer.oi.motionStick.getX();
-    _yValue = RobotContainer.oi.motionStick.getY();
-    xValue = RobotContainer.chassis.deadBand(_xValue);
-    yValue = RobotContainer.chassis.deadBand(_yValue);
+  public Drive() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.chassis);
   }
@@ -42,8 +38,11 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-        RobotContainer.chassis.drive(xValue, yValue);
+    zValue = RobotContainer.chassis.deadBand(RobotContainer.oi.motionStick.getZ());
+    yValue = RobotContainer.chassis.deadBand(RobotContainer.oi.motionStick.getY());
+    SmartDashboard.putNumber("yValue", yValue);
+    SmartDashboard.putNumber("zValue", zValue);
+    RobotContainer.chassis.drive(zValue, yValue);
   }
 
   // Called once the command ends or is interrupted.

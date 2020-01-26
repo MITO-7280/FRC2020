@@ -15,4 +15,14 @@ public class ToLowSpeed extends CommandBase{
     public void execute(){
         RobotContainer.chassis.toLowSpeed();
     }
+
+    @Override
+    public void end(boolean interrupted){
+
+    }
+
+    @Override
+    public boolean isFinished(){
+        return true;
+    }
 }

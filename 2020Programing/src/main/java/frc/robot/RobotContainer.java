@@ -53,7 +53,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    chassis.setDefaultCommand(new Drive(oi.motionStick.getX(), oi.motionStick.getY()));
+    chassis.setDefaultCommand(new Drive());
   }
 
 

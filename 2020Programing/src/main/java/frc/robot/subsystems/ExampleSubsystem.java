@@ -22,7 +22,7 @@ public class ExampleSubsystem extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
 
-  private TalonSRX testMotor = new TalonSRX(1);
+  private TalonFX testMotor = new TalonFX(10);
   public ExampleSubsystem() {
     testMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
         Constants.kTimeoutMs);

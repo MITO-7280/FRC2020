@@ -14,8 +14,8 @@ public class OI {
 
   public JoystickButton test = new JoystickButton(motionStick, 1);
   public JoystickButton intake = new JoystickButton(motionStick, 2);
-  public JoystickButton toFast = new JoystickButton(motionStick, 3);
-  public JoystickButton toSlow = new JoystickButton(motionStick, 4);
+  public JoystickButton toFast = new JoystickButton(motionStick, 5);
+  public JoystickButton toSlow = new JoystickButton(motionStick, 3);
 
 
     public OI(){
