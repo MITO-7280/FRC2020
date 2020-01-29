@@ -22,7 +22,7 @@ public class ExampleSubsystem extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
 
-  private TalonFX testMotor = new TalonFX(10);
+  private TalonSRX testMotor = new TalonSRX(1);
   public ExampleSubsystem() {
     testMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
         Constants.kTimeoutMs);
@@ -46,8 +46,7 @@ public class ExampleSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    System.out.println(testMotor.getSelectedSensorVelocity());
-
+    System.out.println(testMotor.getSelectedSensorVelocity()/4096*600/4);
   }
 
   public void testRun(double speedRPM){
@@ -56,7 +55,12 @@ public class ExampleSubsystem extends SubsystemBase {
     testMotor.config_kI(Constants.kSlotIdx, 0);
     testMotor.config_kD(Constants.kSlotIdx, 0.01);
     double speed = speedRPM*4096/600;
-    testMotor.set(ControlMode.Velocity, speed);
+    if(speedRPM == 0){
+      testMotor.set(ControlMode.PercentOutput, 0);
+    } else {
+      testMotor.set(ControlMode.Velocity, speed);
+    }
+
   }
 
 }

@@ -62,8 +62,8 @@ public final class Constants {
     public static final int kSlotIdx = 0;
 
     //chassis
-    public static final int highSpeedConstant = 3000;
-    public static final int lowSpeedConstant = 1500;
+    public static final int highSpeedConstant = 4000 /600*4096;
+    public static final int lowSpeedConstant = 2000 /600*4096;
 
     //shooter
     public static final int shootVelocity = 4000; //RPM

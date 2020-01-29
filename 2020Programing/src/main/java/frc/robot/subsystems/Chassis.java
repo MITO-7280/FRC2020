@@ -14,7 +14,7 @@ import frc.robot.RobotContainer;
 
 public class Chassis extends SubsystemBase {
     //set can devices 
-    public TalonFX leftMasterMotor = new TalonFX(Constants.leftMasterMotor);
+    public TalonFX leftMasterMotor = new TalonFX(2);
     public TalonFX leftSlaveMotor = new TalonFX(Constants.leftSlaveMotor);
     public TalonFX rightMasterMotor = new TalonFX(Constants.rightMasterMotor);
     public TalonFX rightSlaveMotor = new TalonFX(Constants.rightSlaveMotor);
@@ -51,12 +51,12 @@ public class Chassis extends SubsystemBase {
     @Override
     public void periodic(){
         //show Velocity data
-        SmartDashboard.putNumber("left Velocity", leftMasterMotor.getSelectedSensorPosition());
-        SmartDashboard.putNumber("right Velocity", rightMasterMotor.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("left Velocity RPM", leftMasterMotor.getSelectedSensorVelocity()*600/4096);
+        SmartDashboard.putNumber("right Velocity RPM", rightMasterMotor.getSelectedSensorVelocity()*600/4096);
 
         //show position data
-        SmartDashboard.putNumber("left Position", leftMasterMotor.getSelectedSensorPosition());
-        SmartDashboard.putNumber("right Positon", rightMasterMotor.getSelectedSensorPosition());
+        SmartDashboard.putNumber("left Position rotation", leftMasterMotor.getSelectedSensorPosition()*600/4096);
+        SmartDashboard.putNumber("right Positon rotation", rightMasterMotor.getSelectedSensorPosition()*600/4096);
 
         //show drive direction data
         SmartDashboard.putBoolean("isForward", isForward);
@@ -114,7 +114,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public void configVelocityPID(){
-        Constants.setFalconPID(leftMasterMotor, 0, 0, 0, 0);
+        Constants.setFalconPID(leftMasterMotor, 0, 0.1, 0, 0);
         Constants.setFalconPID(rightMasterMotor, 0, 0, 0, 0);
     }
 
