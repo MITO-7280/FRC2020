@@ -16,8 +16,6 @@ public class Shooter extends SubsystemBase{
     public TalonFX shootingMaster = new TalonFX(Constants.shootingMaster);
     public TalonFX shootingSlave = new TalonFX(Constants.shootingSlave);
 
-    public boolean isShooting = false;
-    public boolean isReady = false;
 
     public double shootUnitVelocity = Constants.shootVelocity*4096/600;
     //variablies
@@ -37,27 +35,12 @@ public class Shooter extends SubsystemBase{
 
     @Override
     public void periodic(){
-        //when to prepare for shooting
-        if (RobotContainer.oi.motionStick.getRawAxis(3) >= 0.5){
-            isShooting = false;
-        } else if (RobotContainer.oi.motionStick.getRawAxis(3) <= 0.5){
-            isShooting = true;
-        }
-        SmartDashboard.putBoolean("isShooting", isShooting);
-
         //active flywheel
-        if (isShooting){
+        if (RobotContainer.judge.isShooting){
             shootingMaster.set(ControlMode.Velocity, shootUnitVelocity);
         } else {
             shootingMaster.set(ControlMode.PercentOutput, 0);
         }
 
-        //when is ready to shoot
-        if (shootingMaster.getSelectedSensorVelocity() >= shootUnitVelocity){
-            isReady = true;
-        } else {
-            isReady = false;
-        }
-        SmartDashboard.putBoolean("isReady", isReady);
     }
 }

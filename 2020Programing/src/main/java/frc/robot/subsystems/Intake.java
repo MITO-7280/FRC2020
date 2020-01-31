@@ -28,12 +28,6 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic(){
-        //active stop solenoid
-        if (RobotContainer.shooter.isReady){
-            ballTransferStopper.set(false);
-        } else {
-            ballTransferStopper.set(true);
-        }
     }
 
     public void intake(double speed){
@@ -58,5 +52,10 @@ public class Intake extends SubsystemBase {
 
     public void shootball(){
         transferMotor.set(500);
+        if (RobotContainer.judge.isShootReady){
+            ballTransferStopper.set(false);
+        } else {
+            ballTransferStopper.set(true);
+        }
     }
 }

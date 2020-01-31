@@ -12,10 +12,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.GetTableData;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Judge;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -32,6 +35,8 @@ public class RobotContainer {
   public final static Chassis chassis = new Chassis();
   public final static Intake intake = new Intake();
   public final static Shooter shooter = new Shooter();
+  public final static Vision vision = new Vision();
+  public final static Judge judge = new Judge();
   public final static OI oi = new OI();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand();
@@ -54,6 +59,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     chassis.setDefaultCommand(new Drive());
+    vision.setDefaultCommand(new GetTableData());
   }
 
 

@@ -47,6 +47,11 @@ public class ExampleSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     System.out.println(testMotor.getSelectedSensorVelocity()/4096*600/4);
+    if (RobotContainer.judge.isShooting){
+      testRun(18000);
+    } else {
+      testRun(0);
+    }
   }
 
   public void testRun(double speedRPM){
@@ -58,7 +63,7 @@ public class ExampleSubsystem extends SubsystemBase {
     if(speedRPM == 0){
       testMotor.set(ControlMode.PercentOutput, 0);
     } else {
-      testMotor.set(ControlMode.Velocity, speed);
+      testMotor.set(ControlMode.PercentOutput, 1);
     }
 
   }

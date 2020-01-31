@@ -3,15 +3,20 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class ToLowSpeed extends CommandBase{
-    
-    public ToLowSpeed() {
+public class Judging extends CommandBase{
+    public Judging(){
         addRequirements(RobotContainer.judge);
     }
 
     @Override
+    public void initialize(){
+
+    }
+
+    @Override
     public void execute(){
-        RobotContainer.judge.toLowSpeed();
+        RobotContainer.judge.shooterDetecting();
+        RobotContainer.judge.isForwardDetecting();
     }
 
     @Override
@@ -21,6 +26,6 @@ public class ToLowSpeed extends CommandBase{
 
     @Override
     public boolean isFinished(){
-        return true;
+        return false;
     }
 }

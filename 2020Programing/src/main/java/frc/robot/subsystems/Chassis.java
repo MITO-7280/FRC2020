@@ -26,8 +26,6 @@ public class Chassis extends SubsystemBase {
 
     //set variables
     public double leftSpeed, rightSpeed, leftPosition, rightPosition;
-    public boolean isHighSpeed = true;
-    public boolean isForward = true;
     public Chassis(){
         //motor init 
         Constants.TalonInit(leftMasterMotor, 40, false);
@@ -59,28 +57,23 @@ public class Chassis extends SubsystemBase {
         SmartDashboard.putNumber("right Positon rotation", rightMasterMotor.getSelectedSensorPosition()*600/4096);
 
         //show drive direction data
-        SmartDashboard.putBoolean("isForward", isForward);
+        SmartDashboard.putBoolean("isForward", RobotContainer.judge.isForward);
 
         //show drive speed data 
-        SmartDashboard.putBoolean("isHighSpeed", isHighSpeed);
+        SmartDashboard.putBoolean("isHighSpeed", RobotContainer.judge.isHighSpeed);
 
 
-        //set forward or not
-        if (RobotContainer.oi.motionStick.getPOV() == 0){
-            isForward = true;
-        } else if (RobotContainer.oi.motionStick.getPOV() == 180){
-            isForward = false;
-        }
+
 
         //active solenoid to fast of slow
-        driveModeSwitcher.set(isHighSpeed);
+        driveModeSwitcher.set(RobotContainer.judge.isHighSpeed);
     }
 
     public void drive(double xValue, double yValue){
         //set drive speed and drive with velocity PID
         configVelocityPID();
-        if (isForward){
-            if (isHighSpeed){
+        if (RobotContainer.judge.isForward){
+            if (RobotContainer.judge.isHighSpeed){
                 leftSpeed = (yValue + xValue)* Constants.highSpeedConstant;
                 rightSpeed = (yValue - xValue)* Constants.highSpeedConstant;
             } else {
@@ -88,7 +81,7 @@ public class Chassis extends SubsystemBase {
                 rightSpeed = (yValue - xValue)* Constants.lowSpeedConstant;
             }
         } else {
-            if (isHighSpeed){
+            if (RobotContainer.judge.isHighSpeed){
                 leftSpeed = -(yValue + xValue)* Constants.highSpeedConstant;
                 rightSpeed = -(yValue - xValue)* Constants.highSpeedConstant;
             } else {
@@ -105,14 +98,6 @@ public class Chassis extends SubsystemBase {
         rightMasterMotor.set(ControlMode.Velocity, rightSpeed);
     }
 
-    public void toHighSpeed(){
-        isHighSpeed = true;
-    }
-
-    public void toLowSpeed(){
-        isHighSpeed = false;
-    }
-
     public void configVelocityPID(){
         Constants.setFalconPID(leftMasterMotor, 0, 0.1, 0, 0);
         Constants.setFalconPID(rightMasterMotor, 0, 0, 0, 0);
@@ -123,18 +108,6 @@ public class Chassis extends SubsystemBase {
         Constants.setFalconPID(rightMasterMotor, 0, 0, 0, 0);
     }
 
-    public double deadBand(double value){
-        //init joystick output dataa
-        if (value >= 0.05){
-            return value;
-        }
 
-        if (value <= -0.05){
-            return value;
-        }
-
-        return 0;
-
-    }
 
 }
