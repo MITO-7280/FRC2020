@@ -37,6 +37,7 @@ public final class Constants {
     //shooting
     public static final int shootingMaster = 5;
     public static final int shootingSlave = 6;
+    public static final int shootAdjuster = 10;
 
     //intake 
     public static final int transferMotor = 7;
@@ -149,5 +150,15 @@ public final class Constants {
         _talon.config_kP(kSlotIdx, kP);
         _talon.config_kI(kSlotIdx, kI);
         _talon.config_kD(kSlotIdx, kD);
+    }
+
+    public static double getSparkPosition(CANSparkMax _spark){
+        CANEncoder _encoder = _spark.getEncoder();
+        return _encoder.getPosition();
+    }
+
+    public static double getSparkVelocity(CANSparkMax _spark){
+        CANEncoder _encoder = _spark.getEncoder();
+        return _encoder.getVelocity();
     }
 }

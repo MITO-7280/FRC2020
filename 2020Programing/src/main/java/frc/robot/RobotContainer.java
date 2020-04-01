@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GetTableData;
+import frc.robot.commands.Judging;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
@@ -60,6 +61,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     chassis.setDefaultCommand(new Drive());
     vision.setDefaultCommand(new GetTableData());
+    judge.setDefaultCommand(new Judging());
   }
 
 

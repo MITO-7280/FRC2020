@@ -14,15 +14,12 @@ import frc.robot.RobotContainer;
 
 public class Chassis extends SubsystemBase {
     //set can devices 
-    public TalonFX leftMasterMotor = new TalonFX(2);
+    public TalonFX leftMasterMotor = new TalonFX( Constants.leftMasterMotor);
     public TalonFX leftSlaveMotor = new TalonFX(Constants.leftSlaveMotor);
     public TalonFX rightMasterMotor = new TalonFX(Constants.rightMasterMotor);
     public TalonFX rightSlaveMotor = new TalonFX(Constants.rightSlaveMotor);
 
     public Solenoid driveModeSwitcher = new Solenoid(Constants.driveModeSwitcher);
-
-    //set other sources
-    public Constants constants = new Constants();
 
     //set variables
     public double leftSpeed, rightSpeed, leftPosition, rightPosition;
@@ -100,7 +97,7 @@ public class Chassis extends SubsystemBase {
 
     public void configVelocityPID(){
         Constants.setFalconPID(leftMasterMotor, 0, 0.1, 0, 0);
-        Constants.setFalconPID(rightMasterMotor, 0, 0, 0, 0);
+        Constants.setFalconPID(rightMasterMotor, 0, 0.1, 0, 0);
     }
 
     public void configPositionPID(){

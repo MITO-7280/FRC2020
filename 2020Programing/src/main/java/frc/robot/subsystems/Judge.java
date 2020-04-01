@@ -6,11 +6,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
 public class Judge extends SubsystemBase{
-    public boolean isTableOn;
     public boolean isForward;
     public boolean isHighSpeed;
     public boolean isShooting;
     public boolean isShootReady;
+    public boolean isShootingActive;
+    public boolean isVisionOK;
+    public boolean isVisionOn;
 
     public Judge(){
 
@@ -23,7 +25,7 @@ public class Judge extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putBoolean("isTableOn", isTableOn);
+        SmartDashboard.putBoolean("isVisionOn", isVisionOn);
         SmartDashboard.putBoolean("isForward", isForward);
         SmartDashboard.putBoolean("isHighSpeed", isHighSpeed);
     }
@@ -62,14 +64,14 @@ public class Judge extends SubsystemBase{
 
     public void shooterDetecting(){
         //prepare to shoot
-        if (RobotContainer.oi.motionStick.getRawAxis(3) >= 0.5){
-            isShooting = false;
-        } else if (RobotContainer.oi.motionStick.getRawAxis(3) <= 0.5){
-            isShooting = true;
+        if (SmartDashboard.getBoolean("shoot", false)){
+            isShootingActive = false;
+        } else {
+            isShootingActive = true;
         }
 
         //is ready to shoot
-        if (RobotContainer.shooter.shootingMaster.getSelectedSensorVelocity() >= RobotContainer.shooter.shootUnitVelocity){
+        if (RobotContainer.shooter.shootingMaster.getSelectedSensorVelocity() >= RobotContainer.shooter.shootUnitVelocity && isShooting && isVisionOK){
             isShootReady = true;
         } else {
             isShootReady = false;

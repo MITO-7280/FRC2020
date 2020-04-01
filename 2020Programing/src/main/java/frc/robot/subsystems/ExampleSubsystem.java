@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,7 +24,9 @@ public class ExampleSubsystem extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
 
-  private TalonSRX testMotor = new TalonSRX(1);
+  private TalonFX testMotor = new TalonFX(1);
+  private CANSparkMax testMotorB = new CANSparkMax(11, MotorType.kBrushless);
+  
   public ExampleSubsystem() {
     testMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
         Constants.kTimeoutMs);
@@ -41,6 +45,8 @@ public class ExampleSubsystem extends SubsystemBase {
     testMotor.configAllowableClosedloopError(1, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     
     testMotor.setInverted(false);
+
+    Constants.REVInit(testMotorB, false, 0.1, 0, 0, 1, -1);
   }
 
   @Override
@@ -62,9 +68,13 @@ public class ExampleSubsystem extends SubsystemBase {
     double speed = speedRPM*4096/600;
     if(speedRPM == 0){
       testMotor.set(ControlMode.PercentOutput, 0);
+      testMotorB.set(0);
     } else {
-      testMotor.set(ControlMode.PercentOutput, 1);
+      testMotor.set(ControlMode.Velocity, speed);
+      testMotorB.set(100);
     }
+
+
 
   }
 

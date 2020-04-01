@@ -50,12 +50,16 @@ public class Intake extends SubsystemBase {
         intakePusher.set(false);
     }
 
-    public void shootball(){
+    public void ballTransfer(){
         transferMotor.set(500);
         if (RobotContainer.judge.isShootReady){
             ballTransferStopper.set(false);
         } else {
             ballTransferStopper.set(true);
         }
+    }
+
+    public void ballTransferStop(){
+        transferMotor.set(0);
     }
 }

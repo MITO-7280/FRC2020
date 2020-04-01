@@ -16,8 +16,10 @@ import frc.robot.RobotContainer;
  */
 public class Drive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  double zValue;
-  double yValue;
+  double zValue;//turn
+  double yValue;//move
+  double throttle;
+  double brake;
 
   /**
    * Creates a new ExampleCommand.
@@ -38,8 +40,10 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    zValue = RobotContainer.judge.deadBand(RobotContainer.oi.motionStick.getZ());
-    yValue = RobotContainer.judge.deadBand(RobotContainer.oi.motionStick.getY());
+    zValue = RobotContainer.judge.deadBand(RobotContainer.oi.motionStick.getRawAxis(0));
+    throttle = RobotContainer.judge.deadBand(RobotContainer.oi.motionStick.getRawAxis(3));
+    brake = RobotContainer.judge.deadBand(RobotContainer.oi.motionStick.getRawAxis(2));
+    yValue = throttle - brake;
     SmartDashboard.putNumber("yValue", yValue);
     SmartDashboard.putNumber("zValue", zValue);
     RobotContainer.chassis.drive(zValue, yValue);
